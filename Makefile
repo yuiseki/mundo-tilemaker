@@ -6,7 +6,6 @@ admin_geojson = tmp/$(ADMIN_NAME).geojson
 admin_poly = tmp/$(ADMIN_NAME).poly
 admin_pbf = tmp/$(ADMIN_NAME).pbf
 mbtiles = tmp/region.mbtiles
-pmtiles = tmp/region.pmtiles
 tilejson = docs/tiles.json
 stylejson = docs/style.json
 zxy_metadata = docs/zxy/metadata.json
@@ -16,20 +15,21 @@ targets = \
 	docs/openmaptiles/fonts/Open\ Sans\ Italic/0-255.pbf \
 	docs/openmaptiles/fonts/Open\ Sans\ Regular/0-255.pbf \
 	$(region_pbf) \
-	$(admin_osmjson) \
-	$(admin_geojson) \
-	$(admin_poly) \
-	$(admin_pbf) \
 	$(mbtiles) \
 	$(tilejson) \
 	$(zxy_metadata) \
-	$(stylejson)
+	$(stylejson) \
+	#$(admin_osmjson) \
+	#$(admin_geojson) \
+	#$(admin_poly) \
+	#$(admin_pbf) \
 
 
 all: $(targets)
 
 clean:
 	sudo chmod 777 -R tmp
+	rm -rf tmp/region.*
 	rm -rf docs/zxy/*
 	rm -f docs/style.json
 	rm -f docs/tiles.json
@@ -39,7 +39,7 @@ clean-all:
 	rm -f $(admin_osmjson)
 	rm -f $(admin_geojson)
 	rm -f $(admin_poly)
-	rm -f $(admin_pbf)
+		rm -f $(admin_pbf)
 	rm -f $(mbtiles)
 	rm -f $(tilejson)
 	rm -f $(stylejson)
@@ -118,11 +118,12 @@ $(admin_pbf):
 
 
 # Convert OSM PBF to MBTiles format file
+# TODO to selectable admin or reigon pbf
 $(mbtiles):
 	tilemaker \
 		--threads 3 \
 		--skip-integrity \
-		--input $(CURDIR)/$(admin_pbf) \
+		--input $(CURDIR)/$(region_pbf) \
 		--output $(CURDIR)/$(mbtiles)
 
 # Generate TileJSON format file from MBTiles format file
