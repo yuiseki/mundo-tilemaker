@@ -120,6 +120,7 @@ $(admin_pbf):
 # Convert OSM PBF to MBTiles format file
 # TODO to selectable admin or reigon pbf
 $(mbtiles):
+	mkdir -p $(@D)
 	tilemaker \
 		--skip-integrity \
 		--input $(region_pbf) \
