@@ -89,7 +89,7 @@ setup-tilemaker:
 	make -j && \
 	sudo make install && \
 	cp config.json . && \
-	cp process.lut .
+	cp process.lua .
 
 # Download OpenStreetMap data as Protocolbuffer Binary format file (OSM PBF)
 $(region_pbf):
