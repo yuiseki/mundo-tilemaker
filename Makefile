@@ -87,8 +87,8 @@ setup-tilemaker:
 	cd /tmp/src/tilemaker && \
 	make -j && \
 	sudo make install && \
-	cp config.json $(CURDIR) && \
-	cp process.lut $(CURDIR)
+	cp config.json . && \
+	cp process.lut .
 
 # Download OpenStreetMap data as Protocolbuffer Binary format file (OSM PBF)
 $(region_pbf):
@@ -106,32 +106,31 @@ $(admin_osmjson):
 
 # Convert Overpass OSM JSON to GeoJSON
 $(admin_geojson):
-	osmtogeojson $(CURDIR)/$(admin_osmjson) > $(CURDIR)/$(admin_geojson)\
+	osmtogeojson $(admin_osmjson) > $(admin_geojson)\
 
 # Convert GeoJSON to Poly file
 $(admin_poly):
-	geojson2poly $(CURDIR)/$(admin_geojson) $(CURDIR)/$(admin_poly)
+	geojson2poly $(admin_geojson) $(admin_poly)
 
 # Extract only admin area OSM PBF from region OSM PBF
 $(admin_pbf):
-	osmconvert $(CURDIR)/$(region_pbf) -B="$(CURDIR)/$(admin_poly)" --complete-ways -o=$(CURDIR)/$(admin_pbf)
+	osmconvert $(region_pbf) -B="$(admin_poly)" --complete-ways -o=$(admin_pbf)
 
 
 # Convert OSM PBF to MBTiles format file
 # TODO to selectable admin or reigon pbf
 $(mbtiles):
 	tilemaker \
-		--threads 3 \
 		--skip-integrity \
-		--input $(CURDIR)/$(region_pbf) \
-		--output $(CURDIR)/$(mbtiles)
+		--input $(region_pbf) \
+		--output $(mbtiles)
 
 # Generate TileJSON format file from MBTiles format file
 $(tilejson):
 	mbtiles2tilejson \
-		$(CURDIR)/tmp/region.mbtiles \
-		--url $(TILES_URL) > $(CURDIR)/docs/tiles.json
-	sed "s|http://localhost:5000/|$(BASE_PATH)|g" -i $(CURDIR)/docs/tiles.json
+		tmp/region.mbtiles \
+		--url $(TILES_URL) > docs/tiles.json
+	sed "s|http://localhost:5000/|$(BASE_PATH)|g" -i docs/tiles.json
 
 # Split MBTiles format file to zxy orderd Protocolbuffer Binary format files
 $(zxy_metadata):
@@ -141,14 +140,14 @@ $(zxy_metadata):
 		--no-tile-compression \
 		--no-tile-size-limit \
 		--no-tile-stats \
-		--output-to-directory=$(CURDIR)/tmp/zxy \
-		$(CURDIR)/$(mbtiles)
+		--output-to-directory=tmp/zxy \
+		$(mbtiles)
 	cp -r tmp/zxy docs/
 
 # Generate style.json from style.yml
 $(stylejson):
-	charites build $(CURDIR)/style.yml $(CURDIR)/docs/style.json
-	sed "s|http://localhost:5000/|$(BASE_PATH)|g" -i $(CURDIR)/docs/style.json
+	charites build style.yml docs/style.json
+	sed "s|http://localhost:5000/|$(BASE_PATH)|g" -i docs/style.json
 
 docs/openmaptiles/fonts/Open\ Sans\ Bold/0-255.pbf:
 	cd docs/openmaptiles/fonts && unzip Open\ Sans\ Bold.zip
