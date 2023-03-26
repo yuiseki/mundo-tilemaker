@@ -58,7 +58,7 @@ setup:
 
 setup-tippecanoe:
 	sudo echo "sudo OK" && \
-	sudo apt install -y libsqlite3-dev \
+	sudo apt install -y libsqlite3-dev && \
 	mkdir -p /tmp/src && \
 	cd /tmp/src && \
 	rm -rf tippecanoe && \
