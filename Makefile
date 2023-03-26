@@ -50,6 +50,8 @@ clean-all:
 	rm -rf docs/openmaptiles/fonts/Open\ Sans\ Regular
 
 setup: setup-tippecanoe setup-tilemaker
+	sudo echo "sudo OK" && \
+	sudo curl -Ls https://deb.nodesource.com/setup_18.x | bash
 	npm install -g osmtogeojson
 	npm install -g geojson2poly
 	npm install -g mbtiles2tilejson
