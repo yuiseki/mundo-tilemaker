@@ -58,6 +58,7 @@ setup:
 
 setup-tippecanoe:
 	sudo echo "sudo OK" && \
+	sudo apt install -y libsqlite3-dev \
 	mkdir -p /tmp/src && \
 	cd /tmp/src && \
 	rm -rf tippecanoe && \
@@ -88,7 +89,7 @@ setup-tilemaker:
 	make -j && \
 	sudo make install && \
 	cp config.json . && \
-	cp process.lut .
+	cp process.lua .
 
 # Download OpenStreetMap data as Protocolbuffer Binary format file (OSM PBF)
 $(region_pbf):
