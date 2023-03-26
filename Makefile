@@ -49,7 +49,7 @@ clean-all:
 	rm -rf docs/openmaptiles/fonts/Open\ Sans\ Italic
 	rm -rf docs/openmaptiles/fonts/Open\ Sans\ Regular
 
-setup: setup-tippecanoe setup-tilemaker
+setup:
 	sudo echo "sudo OK" && \
 	sudo curl -Ls https://deb.nodesource.com/setup_18.x | bash
 	npm install -g osmtogeojson
@@ -57,6 +57,8 @@ setup: setup-tippecanoe setup-tilemaker
 	npm install -g mbtiles2tilejson
 	npm install -g @unvt/charites
 	npm install -g http-server
+	make setup-tippecanoe
+	make setup-tilemaker
 
 setup-tippecanoe:
 	sudo echo "sudo OK" && \
