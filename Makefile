@@ -49,7 +49,7 @@ clean-all:
 	rm -rf docs/openmaptiles/fonts/Open\ Sans\ Italic
 	rm -rf docs/openmaptiles/fonts/Open\ Sans\ Regular
 
-setup:
+setup: setup-tippecanoe setup-tilemaker
 	npm install -g osmtogeojson
 	npm install -g geojson2poly
 	npm install -g mbtiles2tilejson
