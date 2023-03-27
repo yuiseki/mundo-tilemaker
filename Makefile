@@ -51,12 +51,25 @@ clean-all:
 
 setup:
 	sudo echo "sudo OK" && \
-	sudo curl -Ls https://deb.nodesource.com/setup_18.x | bash
-	npm install -g osmtogeojson
-	npm install -g geojson2poly
-	npm install -g mbtiles2tilejson
-	npm install -g @unvt/charites
-	npm install -g http-server
+	curl -Ls https://deb.nodesource.com/setup_18.x | sudo bash
+	sudo apt install -y nodejs
+	sudo npm install -g osmtogeojson
+	sudo npm install -g geojson2poly
+	sudo npm install -g mbtiles2tilejson
+	sudo npm install -g @unvt/charites
+	sudo npm install -g http-server
+	sudo apt install -y \
+	build-essential \
+	autoconf \
+	automake \
+	cmake \
+	gcc \
+	g++ \
+	libtool \
+	xz-utils \
+	sqlite3 \
+	libsqlite3-dev \
+	zlib1g-dev
 	make setup-tippecanoe
 	make setup-tilemaker
 
@@ -68,7 +81,8 @@ setup-tippecanoe:
 	rm -rf tippecanoe && \
 	git clone --depth 1 https://github.com/felt/tippecanoe.git && \
 	cd /tmp/src/tippecanoe && \
-	make -j && \
+	make clean && \
+	make -j3 && \
 	sudo make install
 
 setup-tilemaker:
@@ -90,10 +104,11 @@ setup-tilemaker:
 	rm -rf tilemaker && \
 	git clone --depth 1 https://github.com/systemed/tilemaker.git && \
 	cd /tmp/src/tilemaker && \
-	make -j && \
+	make clean && \
+	make -j3 && \
 	sudo make install && \
-	cp config.json . && \
-	cp process.lua .
+	cp /tmp/src/tilemaker/process.lua .
+	cp /tmp/src/tilemaker/process.lua .
 
 # Download OpenStreetMap data as Protocolbuffer Binary format file (OSM PBF)
 $(region_pbf):
