@@ -105,10 +105,10 @@ setup-tilemaker:
 	git clone --depth 1 https://github.com/systemed/tilemaker.git && \
 	cd /tmp/src/tilemaker && \
 	make clean && \
-	make -j3 && \
+	make && \
 	sudo make install && \
-	cp /tmp/src/tilemaker/process.lua .
-	cp /tmp/src/tilemaker/process.lua .
+	cp /tmp/src/tilemaker/process.lua . && \
+	cp /tmp/src/tilemaker/config.json .
 
 # Download OpenStreetMap data as Protocolbuffer Binary format file (OSM PBF)
 $(region_pbf):
