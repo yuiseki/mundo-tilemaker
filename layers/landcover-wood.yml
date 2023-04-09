@@ -16,6 +16,12 @@ paint:
         - false
       - - 9
         - true
-  fill-color: '#6a4'
-  fill-opacity: 0.1
+  fill-color: rgba(105, 170, 105, 0.5)
+  fill-opacity:
+    base: 0.5
+    stops:
+      - - 6
+        - 0.5
+      - - 20
+        - 0.8
   fill-outline-color: hsla(0, 0%, 0%, 0.03)

@@ -27,7 +27,7 @@ paint:
   line-width:
     base: 1.2
     stops:
-      - - 8
+      - - 6
         - 1.5
       - - 20
         - 17

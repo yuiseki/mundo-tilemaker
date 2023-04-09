@@ -8,5 +8,14 @@ filter:
   - '=='
   - class
   - school
+layout:
+  visibility: visible
 paint:
-  fill-color: '#f0e8f8'
+  fill-color: rgb(209, 209, 209)
+  fill-opacity:
+    base: 0.2
+    stops:
+      - - 6
+        - 0.2
+      - - 20
+        - 0.6
